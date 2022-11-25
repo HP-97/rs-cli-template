@@ -1,13 +1,11 @@
-use std::env;
-
-use anyhow::Result;
+use std::{env};
+use anyhow::{Result};
 use config::{Config as ConfigRS, ConfigError, Environment, File, ConfigBuilder, builder::DefaultState};
 use serde_derive::{Deserialize, Serialize};
 
 use crate::cli::parse_args;
 
-// TODO: Should make the name of the default configuration file constant
-// const default_config_file_path
+const DEFAULT_CONFIG_NAME: &str = "config.toml";
 
 const ENV_PREFIX: &str = "APP";
 
@@ -18,14 +16,11 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new() -> Result<Self, ConfigError> {
+    pub fn new() -> Result<Self,ConfigError> {
         let matches = parse_args();
-        let s: ConfigBuilder<DefaultState>;
-        s = ConfigRS::builder()
-            .add_source(File::with_name("./config.toml").required(false))
-            .add_source(Environment::with_prefix(ENV_PREFIX));
+        // Override environment variables as required
 
-        // log_level CLI
+        // log_level
         let log_level = match matches.get_one::<u8>("verbose") {
             Some(1) => "info",
             Some(2) => "debug",
@@ -35,7 +30,15 @@ impl Config {
         if !log_level.is_empty() {
             env::set_var(format!("{}_LOG_LEVEL", ENV_PREFIX), log_level);
         }
-        
+
+        // Get the default config path 
+        let s: ConfigBuilder<DefaultState>;
+        s = ConfigRS::builder()
+            .add_source(File::with_name(DEFAULT_CONFIG_NAME).required(false))
+            .add_source(Environment::with_prefix(ENV_PREFIX))
+            // NOTE: Define defaults here
+            .set_default("log_level", "error")?;
+
         // Build the config
         s.build()?.try_deserialize()
     }
