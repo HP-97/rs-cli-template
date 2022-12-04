@@ -29,9 +29,11 @@ impl Config {
         let log_level = match matches.get_one::<u8>("verbose") {
             Some(1) => "info",
             Some(2) => "debug",
-            Some(3) => "trace",
-            _ => ""
+            Some(&x) if x >= 3 => "trace",
+            // Default logging level
+            _ => "error"
         };
+
         if !log_level.is_empty() {
             env::set_var(format!("{}_LOG_LEVEL", ENV_PREFIX), log_level);
         }
