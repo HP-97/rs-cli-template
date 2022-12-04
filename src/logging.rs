@@ -43,23 +43,10 @@ impl FromStr for LogLevel {
     }
 }
 
-// impl TryFrom<u8> for LogLevel {
-//     type Error = ();
-
-//     fn try_from(v: u8) -> Result<Self, Self::Error> {
-//         match v {
-//             0 => Ok(LogLevel::ERROR),
-//             1 => Ok(LogLevel::INFO),
-//             2 => Ok(LogLevel::DEBUG),
-//             3 => Ok(LogLevel::TRACE),
-//             _ => Err(())
-//         }
-//     }
-// }
 
 // TODO: Complete to init global logger
 // TODO: Add functionality to configure a log file that is on default placed in ./log/ where . is the directory of the binary.
-// NOTE: Docs: https://docs.rs/tracing-appender/latest/tracing_appender/
+// Documentation for tracing_appender: https://docs.rs/tracing-appender/latest/tracing_appender/
 pub fn init_logging() {
     // FIXME Unhandled Result
     let logfile_dir = format!("{}/{}", get_exe_parent_path().unwrap().display(), "log");
