@@ -4,7 +4,7 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use tracing::{event, Level};
 use tracing_subscriber::{
-    fmt::{writer::MakeWriterExt, Layer, time},
+    fmt::{time, writer::MakeWriterExt, Layer},
     prelude::__tracing_subscriber_SubscriberExt,
 };
 
@@ -43,20 +43,31 @@ impl FromStr for LogLevel {
     }
 }
 
-
-// TODO: Complete to init global logger
-// TODO: Add functionality to configure a log file that is on default placed in ./log/ where . is the directory of the binary.
+// TODO: Add functionality to configure a log file that is on default placed in ./logs/ where . is the directory of the binary.
 // Documentation for tracing_appender: https://docs.rs/tracing-appender/latest/tracing_appender/
 pub fn init_logging() {
     // FIXME Unhandled Result
-    let logfile_dir = format!("{}/{}", get_exe_parent_path().unwrap().display(), "log");
-    println!("{logfile_dir}");
+    // Create a PathBuf that points to parent path of executable + '/logs'
+    let mut logfile_dir = get_exe_parent_path().unwrap();
+    logfile_dir.push("logs");
+    let logfile_dir = logfile_dir.display().to_string();
+
     let logfile = tracing_appender::rolling::daily(logfile_dir, "template-logs");
     let stdout = std::io::stdout.with_max_level(tracing::Level::INFO);
+
     let subscriber = tracing_subscriber::registry()
-        .with(Layer::new().with_writer(logfile).with_ansi(false))
-        .with(Layer::new().with_writer(stdout).with_timer(time::));
-    // tracing_subscriber::registry().with(subscriber).init();
+        .with(
+            Layer::new()
+                .with_writer(logfile)
+                .with_ansi(false)
+                .with_timer(time::LocalTime::rfc_3339()),
+        )
+        .with(
+            Layer::new()
+                .with_writer(stdout)
+                .with_timer(time::LocalTime::rfc_3339()),
+        );
+
     tracing::subscriber::set_global_default(subscriber)
         .expect("failed to set global logging instance")
 }
