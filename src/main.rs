@@ -1,3 +1,4 @@
+use anyhow::Result;
 use dotenv::dotenv;
 use tracing::{event, Level};
 
@@ -8,12 +9,15 @@ mod config;
 mod utils;
 mod logging;
 
-fn main() {
+fn main() -> Result<()> {
     // Read .env environmental variables
     dotenv().ok();
     // Init logging
-    init_logging();
+    init_logging()?;
+
     event!(Level::INFO, "hello world!");
     let cfg = Config::new();
     println!("{:#?}", cfg);
+
+    Ok(())
 }

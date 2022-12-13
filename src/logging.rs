@@ -8,7 +8,7 @@ use tracing_subscriber::{
     prelude::__tracing_subscriber_SubscriberExt,
 };
 
-use crate::utils::get_exe_parent_path;
+use crate::{utils::get_exe_parent_path, cli::parse_args};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum LogLevel {
@@ -43,17 +43,29 @@ impl FromStr for LogLevel {
     }
 }
 
-// TODO: Add functionality to configure a log file that is on default placed in ./logs/ where . is the directory of the binary.
+// init_logging configures a log file that is on default placed in ./logs/ where . is the directory of the binary.
 // Documentation for tracing_appender: https://docs.rs/tracing-appender/latest/tracing_appender/
-pub fn init_logging() {
-    // FIXME Unhandled Result
+pub fn init_logging() -> Result<()>{
     // Create a PathBuf that points to parent path of executable + '/logs'
-    let mut logfile_dir = get_exe_parent_path().unwrap();
+    let mut logfile_dir = get_exe_parent_path()?;
     logfile_dir.push("logs");
     let logfile_dir = logfile_dir.display().to_string();
 
-    let logfile = tracing_appender::rolling::daily(logfile_dir, "template-logs");
-    let stdout = std::io::stdout.with_max_level(tracing::Level::INFO);
+    // Get the max logging level
+    // It is technically possible to dynamically reload the max log level (Original plan was to log level at a default and update
+    // according to config struct). Can be done if needed
+    // Reference: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/reload/index.html
+    let matches = parse_args();
+    let log_level = match matches.get_one::<u8>("verbose") {
+        Some(1) => Level::INFO,
+        Some(2) => Level::DEBUG,
+        Some(&x) if x >= 3 => Level::TRACE,
+        // Default logging level
+        _ => Level::ERROR
+    };
+
+    let logfile = tracing_appender::rolling::daily(logfile_dir, "template-logs").with_max_level(log_level);
+    let stdout = std::io::stdout.with_max_level(log_level);
 
     let subscriber = tracing_subscriber::registry()
         .with(
@@ -69,5 +81,7 @@ pub fn init_logging() {
         );
 
     tracing::subscriber::set_global_default(subscriber)
-        .expect("failed to set global logging instance")
+        .expect("failed to set global logging instance");
+    
+    Ok(())
 }
