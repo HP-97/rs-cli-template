@@ -1,9 +1,6 @@
-use std::{env};
 use anyhow::{Result};
 use config::{Config as ConfigRS, ConfigError, Environment, File, ConfigBuilder, builder::DefaultState};
 use serde_derive::{Deserialize, Serialize};
-
-use crate::cli::parse_args;
 
 const DEFAULT_CONFIG_NAME: &str = "config.toml";
 
