@@ -1,8 +1,6 @@
-use std::str::FromStr;
 
 use anyhow::Result;
-use serde::{Deserialize, Serialize};
-use tracing::{event, Level};
+use tracing::{Level};
 use tracing_subscriber::{
     fmt::{time, writer::MakeWriterExt, Layer},
     prelude::__tracing_subscriber_SubscriberExt,
