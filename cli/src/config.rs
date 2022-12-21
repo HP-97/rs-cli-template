@@ -17,21 +17,8 @@ pub struct Config {
 
 impl Config {
     pub fn new() -> Result<Self,ConfigError> {
-        let matches = parse_args();
+        // let matches = parse_args();
         // Override environment variables as required
-
-        // log_level
-        let log_level = match matches.get_one::<u8>("verbose") {
-            Some(1) => "info",
-            Some(2) => "debug",
-            Some(&x) if x >= 3 => "trace",
-            // Default logging level
-            _ => "error"
-        };
-
-        if !log_level.is_empty() {
-            env::set_var(format!("{}_LOG_LEVEL", ENV_PREFIX), log_level);
-        }
 
         // Get the default config path 
         let s: ConfigBuilder<DefaultState>;

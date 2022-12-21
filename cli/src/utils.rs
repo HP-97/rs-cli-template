@@ -2,7 +2,6 @@ use std::{env, path::PathBuf};
 
 use anyhow::{anyhow, Result};
 
-
 // Get the current executable's directory
 //
 // Returns an error if the directory cannot be retrieved
