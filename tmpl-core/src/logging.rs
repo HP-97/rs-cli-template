@@ -1,47 +1,12 @@
-use std::str::FromStr;
 
 use anyhow::Result;
-use serde::{Deserialize, Serialize};
-use tracing::{event, Level};
+use tracing::{Level};
 use tracing_subscriber::{
     fmt::{time, writer::MakeWriterExt, Layer},
     prelude::__tracing_subscriber_SubscriberExt,
 };
 
 use crate::{utils::get_exe_parent_path, cli::parse_args};
-
-#[derive(Debug, Serialize, Deserialize)]
-pub enum LogLevel {
-    TRACE,
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR,
-}
-
-impl FromStr for LogLevel {
-    type Err = ();
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let res = match s.to_lowercase().as_str() {
-            "trace" => LogLevel::TRACE,
-            "debug" => LogLevel::DEBUG,
-            "info" => LogLevel::INFO,
-            "warn" => LogLevel::WARN,
-            "error" => LogLevel::ERROR,
-            // Default log level
-            _ => {
-                event!(
-                    Level::ERROR,
-                    "invalid log level: {}. Defaulting to ERROR",
-                    s
-                );
-                LogLevel::ERROR
-            }
-        };
-        Ok(res)
-    }
-}
 
 // init_logging configures a log file that is on default placed in ./logs/ where . is the directory of the binary.
 // Documentation for tracing_appender: https://docs.rs/tracing-appender/latest/tracing_appender/
