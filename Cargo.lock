@@ -87,20 +87,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cli"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "clap",
- "config",
- "serde",
- "serde_derive",
- "tracing",
- "tracing-appender",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "config"
 version = "0.13.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -628,6 +614,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d967f99f534ca7e495c575c62638eebc2898a8c84c119b89e250477bc4ba16b2"
 dependencies = [
  "time-core",
+]
+
+[[package]]
+name = "tmpl-bin"
+version = "0.1.0"
+dependencies = [
+ "tmpl-core",
+]
+
+[[package]]
+name = "tmpl-core"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "config",
+ "serde",
+ "serde_derive",
+ "tracing",
+ "tracing-appender",
+ "tracing-subscriber",
 ]
 
 [[package]]

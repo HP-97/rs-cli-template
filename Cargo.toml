@@ -1,2 +1,5 @@
 [workspace]
-members = ["cli"] 
+members = [
+    "tmpl-core",
+    "tmpl-bin"
+] 
