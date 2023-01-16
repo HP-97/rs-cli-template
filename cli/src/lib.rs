@@ -1,13 +1,13 @@
-use clap::{Parser, ArgMatches};
+use clap::{Parser};
 
 #[derive(Parser, Debug)]
 pub struct Cli {
     // Turn debugging information on
-    #[arg(short, long, action = clap::ArgAction::Count)]
+    #[arg(short = 'v', action = clap::ArgAction::Count, help = "Turn debugging information on")]
     pub debug: u8
 }
 
-pub fn parse_args() -> ArgMatches {
+pub fn parse_args() -> Cli {
     let args = Cli::parse();
-    let app = Args::into
-}rg
+    args
+}
