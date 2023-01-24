@@ -1,6 +1,5 @@
-use anyhow::{Result};
 use config::{Config as ConfigRS, ConfigError, Environment, File, ConfigBuilder, builder::DefaultState};
-use serde_derive::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
 const DEFAULT_CONFIG_NAME: &str = "config.toml";
 
