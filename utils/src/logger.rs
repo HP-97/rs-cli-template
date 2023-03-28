@@ -1,4 +1,4 @@
-use color_eyre::Result;
+use anyhow::Result;
 use time::macros::format_description;
 use tracing::Level;
 use tracing_subscriber::{fmt::{writer::MakeWriterExt, time::LocalTime, Layer}, prelude::__tracing_subscriber_SubscriberExt};
