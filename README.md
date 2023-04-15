@@ -15,7 +15,7 @@ The 'cli' package contains the definition of the CLI interface, including docs f
 
 ### core
 
-The 'core' package contains **all** of the business logic of the program.
+The 'core' package contains **all** of the business logic of the program. The package name is 'business_core' 
 
 ### utils
 
