@@ -1,2 +1,2 @@
 mod logger;
-mod config;
+pub mod config;
