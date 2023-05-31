@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 pub mod utils;
-pub mod clap;
+pub mod cli;
 pub mod error;
 
 fn get_program_path(binary_name: &str) -> Option<PathBuf> {

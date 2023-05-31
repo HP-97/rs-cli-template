@@ -1,7 +1,7 @@
 use config::{Config, ConfigError, Environment, File, ConfigBuilder, builder::DefaultState};
 use serde::{Serialize, Deserialize};
 
-use crate::clap::Cli;
+use crate::cli::Cli;
 
 const DEFAULT_CONFIG_NAME: &str = "config.toml";
 

@@ -1,4 +1,4 @@
-use rs_cli_template::{clap::parse_args, utils::config::AppConfig};
+use rs_cli_template::{cli::parse_args, utils::config::AppConfig};
 
 fn main() {
     let m = parse_args();
