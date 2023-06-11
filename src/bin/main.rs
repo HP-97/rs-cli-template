@@ -1,5 +1,9 @@
-use std::{str::FromStr, process::exit};
-use rs_cli_template::{cli::parse_args, utils::{config::AppConfig, logger}, error::AppError};
+use rs_cli_template::{
+    cli::parse_args,
+    error::AppError,
+    utils::{config::AppConfig, logger},
+};
+use std::{process::exit, str::FromStr};
 
 fn main() -> Result<(), AppError> {
     let m = parse_args();
@@ -9,11 +13,11 @@ fn main() -> Result<(), AppError> {
         let log_level = match tracing::Level::from_str(&cfg.log_level.to_string()) {
             Ok(v) => v,
             Err(_) => {
-                eprintln!("invalid tracing level = {}",&cfg.log_level);
+                eprintln!("invalid tracing level = {}", &cfg.log_level);
                 exit(1)
             }
         };
-    logger::setup_logging(log_level)?;
+        logger::setup_logging(log_level)?;
     }
 
     println!("{:?}", m);

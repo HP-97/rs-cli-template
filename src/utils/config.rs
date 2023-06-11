@@ -1,5 +1,5 @@
-use config::{Config, ConfigError, Environment, File, ConfigBuilder, builder::DefaultState};
-use serde::{Serialize, Deserialize};
+use config::{builder::DefaultState, Config, ConfigBuilder, ConfigError, Environment, File};
+use serde::{Deserialize, Serialize};
 
 use crate::cli::Cli;
 
@@ -14,11 +14,11 @@ pub struct AppConfig {
 }
 
 impl AppConfig {
-    pub fn new(cli_args: Option<&Cli>) -> Result<Self,ConfigError> {
+    pub fn new(cli_args: Option<&Cli>) -> Result<Self, ConfigError> {
         let log_level = match cli_args {
             Some(args) => match args.debug {
                 0 => 1,
-                0 ..= 5 => args.debug,
+                0..=5 => args.debug,
                 level if level > 5 => 5,
                 _ => unreachable!(),
             },
@@ -26,7 +26,7 @@ impl AppConfig {
         };
         // Override environment variables as required
 
-        // Get the default config path 
+        // Get the default config path
         let s: ConfigBuilder<DefaultState>;
         s = Config::builder()
             .add_source(File::with_name(DEFAULT_CONFIG_NAME).required(false))
