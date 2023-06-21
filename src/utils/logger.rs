@@ -1,3 +1,5 @@
+use crate::prelude::*;
+
 use time::macros::format_description;
 use tracing::Level;
 use tracing_subscriber::{
@@ -5,10 +7,8 @@ use tracing_subscriber::{
     prelude::__tracing_subscriber_SubscriberExt,
 };
 
-use crate::error::AppError;
-
 // Sets up a global logger for the whole application
-pub fn setup_logging(log_level: Level) -> Result<(), AppError> {
+pub fn setup_logging(log_level: Level) -> Result<()> {
     // Documentation on implemention a Layer wrapped in an Option
     // https://docs.rs/tracing-subscriber/latest/tracing_subscriber/layer/
 
