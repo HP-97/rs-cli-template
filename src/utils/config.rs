@@ -1,4 +1,6 @@
-use config::{builder::DefaultState, Config, ConfigBuilder, ConfigError, Environment, File};
+use crate::prelude::*;
+
+use config::{builder::DefaultState, Config, ConfigBuilder, Environment, File};
 use serde::{Deserialize, Serialize};
 
 use crate::cli::Cli;
@@ -14,7 +16,7 @@ pub struct AppConfig {
 }
 
 impl AppConfig {
-    pub fn new(cli_args: Option<&Cli>) -> Result<Self, ConfigError> {
+    pub fn new(cli_args: Option<&Cli>) -> Result<Self> {
         let log_level = match cli_args {
             Some(args) => match args.debug {
                 0 => 1,
@@ -36,6 +38,9 @@ impl AppConfig {
             .set_default("log_level", log_level)?;
 
         // Build the config
-        s.build()?.try_deserialize()
+        match s.build()?.try_deserialize::<AppConfig>() {
+            Ok(v) => Ok(v),
+            Err(e) => return Err(AppError::Config(e)),
+        }
     }
 }

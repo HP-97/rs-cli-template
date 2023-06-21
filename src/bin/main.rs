@@ -1,11 +1,13 @@
+use crate::prelude::*;
+
 use rs_cli_template::{
     cli::parse_args,
-    error::AppError,
     utils::{config::AppConfig, logger},
+    prelude,
 };
 use std::{process::exit, str::FromStr};
 
-fn main() -> Result<(), AppError> {
+fn main() -> Result<()> {
     let m = parse_args();
     let cfg = AppConfig::new(Some(&m))?;
 
