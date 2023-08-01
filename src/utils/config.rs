@@ -21,8 +21,9 @@ impl AppConfig {
         let log_level = match cli_args {
             Some(args) => match args.debug {
                 0 => 1,
-                0..=5 => args.debug,
-                level if level > 5 => 5,
+                // this sets -v to log level INFO, -vv = DEBUG, -vvv = TRACE
+                0..=3 => args.debug + 2,
+                level if level > 3 => 5,
                 _ => unreachable!(),
             },
             None => 0,
