@@ -5,6 +5,7 @@ use rs_cli_template::{
     utils::{config::AppConfig, logger},
     prelude,
 };
+use tracing::Level;
 use std::{process::exit, str::FromStr};
 
 fn main() -> Result<()> {
@@ -22,7 +23,6 @@ fn main() -> Result<()> {
         logger::setup_logging(log_level)?;
     }
 
-    println!("{:?}", m);
-    println!("{:?}", cfg);
+    tracing::event!(Level::DEBUG, "program START");
     Ok(())
 }
