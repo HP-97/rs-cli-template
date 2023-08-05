@@ -4,9 +4,9 @@ use crate::prelude::*;
 use tracing_subscriber::fmt::writer::MakeWriterExt;
 use walkdir::{DirEntry, WalkDir};
 
+pub mod prelude;
 pub mod cli;
 pub mod error;
-pub mod prelude;
 pub mod utils;
 
 fn _get_program_path(binary_name: &str) -> Option<PathBuf> {
