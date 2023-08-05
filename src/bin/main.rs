@@ -2,11 +2,11 @@ use crate::prelude::*;
 
 use rs_cli_template::{
     cli::parse_args,
-    utils::{config::AppConfig, logger},
     prelude,
+    utils::{config::AppConfig, logger},
 };
-use tracing::Level;
 use std::{process::exit, str::FromStr};
+use tracing::Level;
 
 fn main() -> Result<()> {
     let m = parse_args();
