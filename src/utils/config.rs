@@ -12,6 +12,7 @@ const DEFAULT_CONFIG_NAME: &str = "config.toml";
 const ENV_PREFIX: &str = "app";
 
 #[derive(Debug, Serialize, Deserialize)]
+/// All applications related configuration should go here
 pub struct AppConfig {
     /// Determines output logging level
     pub log_level: usize,

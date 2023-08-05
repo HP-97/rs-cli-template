@@ -7,7 +7,7 @@ use tracing_subscriber::{
     prelude::__tracing_subscriber_SubscriberExt,
 };
 
-// Sets up a global logger for the whole application
+/// Sets up a global logger for the whole application
 pub fn setup_logging(log_level: Level) -> Result<()> {
     // Documentation on implemention a Layer wrapped in an Option
     // https://docs.rs/tracing-subscriber/latest/tracing_subscriber/layer/
