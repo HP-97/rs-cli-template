@@ -3,13 +3,13 @@ use crate::prelude::*;
 use rs_cli_template::{
     cli::parse_args,
     utils::{config::AppConfig, logger},
-    prelude,
+    prelude, get_all_source_videos,
 };
 use std::{process::exit, str::FromStr};
 
 fn main() -> Result<()> {
     let m = parse_args();
-    let cfg = AppConfig::new(Some(&m))?;
+    let cfg = AppConfig::new(&m)?;
 
     if cfg.log_level > 0 {
         let log_level = match tracing::Level::from_str(&cfg.log_level.to_string()) {
@@ -21,6 +21,10 @@ fn main() -> Result<()> {
         };
         logger::setup_logging(log_level)?;
     }
+    
+
+    let supported_file_exts: Vec<String> = vec!["mp4".into()];
+    get_all_source_videos(&cfg.source_dir, &supported_file_exts);
 
     println!("{:?}", m);
     println!("{:?}", cfg);
