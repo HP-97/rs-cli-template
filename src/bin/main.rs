@@ -23,9 +23,6 @@ fn main() -> Result<()> {
         logger::setup_logging(log_level)?;
     }
 
-    let supported_file_exts: Vec<String> = vec!["mp4".into()];
-    get_all_source_videos(&cfg.source_dir, &supported_file_exts);
-
     tracing::event!(Level::DEBUG, "program START");
     Ok(())
 }

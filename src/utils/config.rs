@@ -16,9 +16,6 @@ const ENV_PREFIX: &str = "app";
 pub struct AppConfig {
     /// Determines output logging level
     pub log_level: usize,
-    pub source_dir: PathBuf,
-    pub dest_dir: PathBuf,
-    pub dry_run: bool,
 }
 
 impl AppConfig {
@@ -26,7 +23,7 @@ impl AppConfig {
         let log_level = match cli_args.debug {
             0 => 1,
             0..=3 => cli_args.debug + 2,
-            level if level > 5 => 5,
+            level if level > 3 => 5,
             _ => unreachable!(),
         };
         // Override environment variables as required
@@ -38,10 +35,7 @@ impl AppConfig {
             // e.g. `APP_USER=alice ./target/app` would set the 'user' key
             .add_source(Environment::with_prefix(ENV_PREFIX))
             // NOTE: Define defaults here
-            .set_default("log_level", log_level)?
-            .set_default("source_dir", cli_args.source_dir.display().to_string())?
-            .set_default("dest_dir", cli_args.dest_dir.display().to_string())?
-            .set_default("dry_run", cli_args.dry_run)?;
+            .set_default("log_level", log_level)?;
 
         // Build the config
         match s.build()?.try_deserialize::<AppConfig>() {
