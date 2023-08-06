@@ -16,6 +16,8 @@ const ENV_PREFIX: &str = "app";
 pub struct AppConfig {
     /// Determines output logging level
     pub log_level: usize,
+    /// If true, do not do any actual work
+    pub dry_run: bool,
 }
 
 impl AppConfig {
@@ -35,7 +37,8 @@ impl AppConfig {
             // e.g. `APP_USER=alice ./target/app` would set the 'user' key
             .add_source(Environment::with_prefix(ENV_PREFIX))
             // NOTE: Define defaults here
-            .set_default("log_level", log_level)?;
+            .set_default("log_level", log_level)?
+            .set_default("dry_run", false)?;
 
         // Build the config
         match s.build()?.try_deserialize::<AppConfig>() {
