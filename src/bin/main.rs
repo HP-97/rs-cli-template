@@ -6,7 +6,7 @@ use rs_cli_template::{
     prelude,
 };
 use tracing::Level;
-use std::{process::exit, str::FromStr};
+use std::{process::exit, str::FromStr, io::IsTerminal};
 
 fn main() -> Result<()> {
     let m = parse_args();
@@ -24,5 +24,14 @@ fn main() -> Result<()> {
     }
 
     tracing::event!(Level::DEBUG, "program START");
+
+    // Below is an code example of working with stdin
+    if ! std::io::stdin().is_terminal() {
+        let mut buf = String::new();
+        if let Err(e) = std::io::stdin().read_line(&mut buf) {
+            tracing::error!("{}", e.to_string());
+        };
+        println!("STDIN: {}", buf);
+    }
     Ok(())
 }
