@@ -20,5 +20,5 @@ serde = { version = "1.0.159", features = ["derive"] }
 thiserror = "1.0.40"
 time = { version = "0.3.20", features = ["macros"] }
 tracing = "0.1.37"
-tracing-subscriber = { version = "0.3.16", features = ["local-time"] }
+tracing-subscriber = { version = "0.3.16", features = ["local-time", "std", "env-filter"] }
 which = "4.4.0"
