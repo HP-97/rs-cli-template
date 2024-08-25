@@ -2,7 +2,9 @@ use std::path::PathBuf;
 
 pub mod cli;
 pub mod error;
+pub mod logger;
 pub mod prelude;
+pub mod settings;
 pub mod utils;
 
 fn _get_program_path(binary_name: &str) -> Option<PathBuf> {
